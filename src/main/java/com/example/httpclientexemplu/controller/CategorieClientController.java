@@ -1,8 +1,7 @@
 package com.example.httpclientexemplu.controller;
 
-import com.example.httpclientexemplu.entity.CategorieDTO;
-import com.example.httpclientexemplu.entity.ProdusDTO;
-import com.example.httpclientexemplu.service.CategorieClientService;
+import com.example.httpclientexemplu.entity.Category;
+import com.example.httpclientexemplu.service.CategoryClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,25 +12,16 @@ import java.util.List;
 public class CategorieClientController {
 
     @Autowired
-    private CategorieClientService service;
+    private CategoryClientService categoryClientService;
 
-    @GetMapping("/categorii")
-    public List<CategorieDTO> toateCategorii() {
-        return service.getCategorii();
+    @GetMapping("/categories")
+    public List<Category> getAllCategories() {
+        return categoryClientService.getAllCategories();
     }
 
-    @GetMapping("/categorii/{id}")
-    public CategorieDTO getCategorie(@PathVariable Long id) {
-        return service.getCategorieById(id);
+    @PostMapping("/newCategory")
+    public void newCategory(@RequestBody Category category) {
+        categoryClientService.newCategory(category);
     }
 
-    @PostMapping("/categorii")
-    public CategorieDTO adaugaCategorie(@RequestBody CategorieDTO categorie) {
-        return service.postCategorie(categorie);
-    }
-
-    @PostMapping("/categorii/{id}/produse")
-    public ProdusDTO adaugaProdus(@PathVariable Long id, @RequestBody ProdusDTO produs) {
-        return service.postProdusInCategorie(id, produs);
-    }
 }
